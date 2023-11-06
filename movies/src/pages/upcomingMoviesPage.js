@@ -1,5 +1,3 @@
-// UpcomingMoviesPage.js
-
 import React, { useState, useEffect } from 'react';
 import PageTemplate from '../components/templateMovieListPage';
 import { getUpcomingMovies } from '../api/tmdb-api';
