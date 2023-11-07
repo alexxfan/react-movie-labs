@@ -20,7 +20,7 @@ $ npm install
 ## API endpoints.
 
 + Discover list of movies - /
-+ Movie details - movie/:id
++ Movie details - movies/:id
 + Favourite movies - /movies/favorites
 + Upcoming movies - /movies/upcoming
 + Must watch movies - /movies/playlist
