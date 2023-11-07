@@ -30,7 +30,7 @@ $ npm install
 
 + Upcoming movies - https://api.themoviedb.org/3/movie/upcoming
 + Movie reviews - https://api.themoviedb.org/3/movie/
-+ Movies -(https://api.themoviedb.org/3/discover/movie
++ Movies - https://api.themoviedb.org/3/discover/movie
 
 
 
