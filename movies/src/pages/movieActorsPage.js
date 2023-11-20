@@ -14,8 +14,6 @@ const MovieActorsPage = (props) => {
     }
       const actors = data.results;
 
-      
-   
     return (
       <PageTemplate
         title="Movie Actors"

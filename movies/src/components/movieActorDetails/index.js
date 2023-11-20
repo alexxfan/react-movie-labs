@@ -6,8 +6,6 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-// A Drawer component is either visible (open) or hidden. We control this with a boolean state variable - drawerOpen.
-
 const root = {
     display: "flex",
     justifyContent: "center",
@@ -16,7 +14,6 @@ const root = {
     padding: 1.5,
     margin: 0,
 };
-
 
 const MovieActorDetails = ({ actors }) => { 
   
