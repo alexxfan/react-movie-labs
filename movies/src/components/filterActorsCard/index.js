@@ -10,6 +10,8 @@ import { getMovieActors } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner';
 
+
+
 const formControl = {
   margin: 1,
   minWidth: 220,
@@ -18,7 +20,6 @@ const formControl = {
 
 const FilterActorsCard = (props) => {
   const { error, isLoading, isError } = useQuery("actors", getMovieActors);
-  // const { titleFilter, onUserInput } = props;
 
   if (isLoading) {
     return <Spinner />;
@@ -27,8 +28,6 @@ const FilterActorsCard = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-
-  // const actors = data?.actors ? [{ id: "0", name: "All" }, ...data.actors] : [];
 
   const handleChange = (e, type, value) => {
     e.preventDefault();
@@ -39,6 +38,7 @@ const FilterActorsCard = (props) => {
     handleChange(e, "name", e.target.value);
   };
 
+
   return (
     <Card
       style={{ maxWidth: 345, backgroundColor: "rgb(204, 204, 0)" }}
@@ -47,7 +47,7 @@ const FilterActorsCard = (props) => {
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter the actors.
+          Search the actors.
         </Typography>
         <TextField
           style={{ ...formControl }}
@@ -63,7 +63,7 @@ const FilterActorsCard = (props) => {
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
-          Filter the actors.
+          Search the actors.
           <br />
         </Typography>
       </CardContent>
