@@ -21,6 +21,7 @@ const root = {
     padding: 1.5,
     margin: 0,
 };
+
 const chip = { margin: 0.5 };
 
 const MovieDetails = ({ movie }) => {  // Don't miss this!

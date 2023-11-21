@@ -1,4 +1,3 @@
-// import React, {useState} from "react";
 import React, {useState} from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,7 +19,6 @@ const formControl = {
 
 const FilterActorsCard = (props) => {
   // const { error, isLoading, isError } = useQuery("actors", getMovieActors);
-
   const currentPage = useState(1);
   const { error, isLoading, isError }  = useQuery(['actors',{ page: currentPage}], getMovieActors)
 

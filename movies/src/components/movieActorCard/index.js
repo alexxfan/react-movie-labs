@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 
 
-export default function MovieActorCard({ actors }){
+export default function MovieActorCard({ actors, action }){
     return (
       <Card sx={{ maxWidth: 345 }}>
         <CardHeader

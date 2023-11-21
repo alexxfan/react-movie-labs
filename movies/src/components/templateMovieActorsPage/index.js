@@ -28,7 +28,14 @@ const TemplateMovieActorsPage = ({ actors, children }) => {
 
       <Grid container spacing={5} sx={{ padding: "15px" }}>
         <Grid item xs={3}>
-          <div sx={{
+        {images.length > 0 && (
+          <img
+            src={`https://image.tmdb.org/t/p/w500/${images[0].file_path}`}
+            alt={images[0].poster_path}
+            style={{ width: "100%", height: "auto" }}
+          />
+        )}
+          {/* <div sx={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-around",
@@ -44,7 +51,7 @@ const TemplateMovieActorsPage = ({ actors, children }) => {
                     </ImageListItem>
                 ))}
             </ImageList>
-          </div>
+          </div> */}
         </Grid>
           <Grid item xs={9}>
           {children}

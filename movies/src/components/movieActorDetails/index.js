@@ -5,18 +5,19 @@ import Typography from "@mui/material/Typography";
 //new Material UI component
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import MovieListPageTemplate from "../templateMovieListPage";
 
 const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: 1.5,
+  margin: 0,
 };
 
-const MovieActorDetails = ({ actors }) => { 
-  
+const MovieActorDetails = ({ actors }) => {
+  console.log("credits", actors.movie_credits.cast);
   return (
     <>
       <Typography variant="h5" component="h3">
@@ -27,32 +28,38 @@ const MovieActorDetails = ({ actors }) => {
         {actors.biography}
       </Typography>
 
-      <Paper 
-        component="ul" 
-        sx={root}
+      <Paper component="ul" sx={root}>
+        <Chip label={`Popularity rating: ${actors.popularity}`} />
+
+        <Chip label={`Date of birth: ${actors.birthday}`} />
+
+        <Chip label={`Birthplace: ${actors.place_of_birth}`} />
+
+        <Chip label={`Best known for: ${actors.known_for_department}`} />
+      </Paper>
+      {/* <Link
+        to={`https://www.themoviedb.org/person/${actors.id}`}
+        style={{ textDecoration: "none" }}
+        target="_blank"
+        rel="noopener noreferrer"
       >
-         <Chip
-         label={`Popularity rating: ${actors.popularity}`}
-        />
-        
-        <Chip
-         label={`Date of birth: ${actors.birthday}`}
-        />
-
-         <Chip
-         label={`Birthplace: ${actors.place_of_birth}`}
-        />
-
-         <Chip
-         label={`Best known for: ${actors.known_for_department}`}
-        />
-        </Paper>
-        <Link to={`https://www.themoviedb.org/person/${actors.id}`} style={{ textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-      <Button variant="contained" color="primary" style={{ marginTop: '16px' }}>
-        Learn More
-      </Button>
-    </Link>
-      </>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "16px" }}
+        >
+          Learn More
+        </Button>
+      </Link> */}
+      <MovieListPageTemplate
+        title={actors.name}
+        movies={actors.movie_credits.cast}
+        action={(movie) => {
+          return null;
+        }
+      }
+      />
+    </>
   );
 };
-export default MovieActorDetails ;
+export default MovieActorDetails;
