@@ -36,7 +36,7 @@ const UpcomingMoviesPage = (props) => {
         return <AddToPlaylistIcon movie={movie} />
       }}
     />
-    <Pagination style={{ marginTop: '25px', display: 'flex', justifyContent: 'center' }} count={8} color="secondary" onChange={handlePageChange} page={currentPage} size="large"/>
+    <Pagination style={{ marginTop: '25px', display: 'flex', justifyContent: 'center' }} count={data.total_pages} color="secondary" onChange={handlePageChange} page={currentPage} size="large"/>
     </>
   );
 };

@@ -28,9 +28,10 @@ const MovieActorsPage = (props) => {
   return (
     <>
       <PageTemplate title="Movie Actors" actors={actors} />
+      {/* count manually here as API has a limit of 500 pages */}
       <Pagination
         style={{ marginTop: "25px", display: "flex", justifyContent: "center" }}
-        count={99}
+        count={500}
         color="secondary"
         onChange={handlePageChange}
         page={currentPage}

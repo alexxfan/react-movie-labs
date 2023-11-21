@@ -39,7 +39,8 @@ const HomePage = (props) => {
         return <AddToFavoritesIcon movie={movie} />
       }}
     />
-    <Pagination style={{ marginTop: '25px', display: 'flex', justifyContent: 'center' }} count={99} color="secondary" onChange={handlePageChange} page={currentPage} size="large"/>
+    {/* count manually here as API has a limit of 500 pages */}
+    <Pagination style={{ marginTop: '25px', display: 'flex', justifyContent: 'center' }} count={500} color="secondary" onChange={handlePageChange} page={currentPage} size="large"/>
     </>
   );
 };
