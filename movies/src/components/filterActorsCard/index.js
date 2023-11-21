@@ -1,4 +1,5 @@
-import React from "react";
+// import React, {useState} from "react";
+import React, {useState} from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,7 +12,6 @@ import { useQuery } from "react-query";
 import Spinner from '../spinner';
 
 
-
 const formControl = {
   margin: 1,
   minWidth: 220,
@@ -19,7 +19,10 @@ const formControl = {
 };
 
 const FilterActorsCard = (props) => {
-  const { error, isLoading, isError } = useQuery("actors", getMovieActors);
+  // const { error, isLoading, isError } = useQuery("actors", getMovieActors);
+
+  const currentPage = useState(1);
+  const { error, isLoading, isError }  = useQuery(['actors',{ page: currentPage}], getMovieActors)
 
   if (isLoading) {
     return <Spinner />;
@@ -37,6 +40,7 @@ const FilterActorsCard = (props) => {
   const handleTextChange = (e, props) => {
     handleChange(e, "name", e.target.value);
   };
+
 
 
   return (

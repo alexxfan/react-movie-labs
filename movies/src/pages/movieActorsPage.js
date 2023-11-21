@@ -1,24 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieActorsListPage";
-import { useQuery } from 'react-query';
-import Spinner from '../components/spinner';
-import {getMovieActors} from '../api/tmdb-api';
-const MovieActorsPage = (props) => {
-    const {data, error, isLoading, isError}  = useQuery('actors', getMovieActors)
-  
-    if (isLoading){
-       return <Spinner/>
-    }
-    if (isError) {
-      return <h1>{error.message}</h1>
-    }
-      const actors = data.results;
+import { useQuery } from "react-query";
+import Spinner from "../components/spinner";
+import { getMovieActors } from "../api/tmdb-api";
+import { Pagination } from "@mui/material";
 
-    return (
-      <PageTemplate
-        title="Movie Actors"
-        actors={actors}
-      />
-    );
+const MovieActorsPage = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { data, error, isLoading, isError, refetch } = useQuery(
+    ["actors", { page: currentPage }],
+    getMovieActors
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+  const actors = data.results;
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+    refetch({ currentPage });
   };
-  export default MovieActorsPage; 
+
+  return (
+    <>
+      <PageTemplate title="Movie Actors" actors={actors} />
+      <Pagination
+        style={{ marginTop: "25px", display: "flex", justifyContent: "center" }}
+        count={99}
+        color="secondary"
+        onChange={handlePageChange}
+        page={currentPage}
+        size="large"
+      />
+    </>
+  );
+};
+export default MovieActorsPage;

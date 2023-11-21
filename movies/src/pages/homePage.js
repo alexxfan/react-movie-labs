@@ -1,14 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
+import { Pagination } from "@mui/material";
 
 const HomePage = (props) => {
 
-
-  const {  data, error, isLoading, isError }  = useQuery('discover', getMovies)
+  const [currentPage, setCurrentPage] = useState(1);
+  const {  data, error, isLoading, isError, refetch }  = useQuery(['discover',{ page: currentPage}], getMovies)
 
   if (isLoading) {
     return <Spinner />
@@ -19,12 +20,18 @@ const HomePage = (props) => {
   }  
   const movies = data.results;
 
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
+    refetch({ currentPage });
+  };
+
   // Redundant, but necessary to avoid app crashing.
   const favorites = movies.filter(m => m.favorite)
   localStorage.setItem('favorites', JSON.stringify(favorites))
-  // const addToFavorites = (movieId) => true 
+  
 
   return (
+    <>
     <PageTemplate
       title="Discover Movies"
       movies={movies}
@@ -32,6 +39,8 @@ const HomePage = (props) => {
         return <AddToFavoritesIcon movie={movie} />
       }}
     />
+    <Pagination style={{ marginTop: '25px', display: 'flex', justifyContent: 'center' }} count={99} color="secondary" onChange={handlePageChange} page={currentPage} size="large"/>
+    </>
   );
 };
 

@@ -1,14 +1,16 @@
-export const getMovies = () => {
+export const getMovies = (args) => {
+
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
 
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
     }
     return response.json();
-  })
-  .catch((error) => {
+  }).catch((error) => {
      throw error
   });
 };
@@ -24,8 +26,7 @@ export const getMovie = (args) => {
       throw new Error(response.json().message);
     }
     return response.json();
-  })
-  .catch((error) => {
+  }).catch((error) => {
     throw error
  });
 };
@@ -40,8 +41,7 @@ export const getMovie = (args) => {
         throw new Error(response.json().message);
       }
       return response.json();
-    })
-    .catch((error) => {
+    }).catch((error) => {
       throw error
    });
   };
@@ -57,8 +57,7 @@ export const getMovie = (args) => {
       }
       return response.json();
   
-    })
-    .catch((error) => {
+    }).catch((error) => {
       throw error
    });
   };
@@ -75,8 +74,11 @@ export const getMovie = (args) => {
   };
 
 export const getUpcomingMovies = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
+  
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&region=GB`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&region=GB&page=${page}`
   ).then((response) => {
     if (!response.ok) throw new Error(response.json().message);
     return response.json();
@@ -85,9 +87,12 @@ export const getUpcomingMovies = (args) => {
   });
 };
 
-export const getTrending = () => {
+export const getTrending = (args) => {
+  const [, idPart] = args.queryKey;
+  const { page } = idPart;
+
   return fetch(
-    `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&region=GB&page=${page}`
     ).then((response) => {
       if (!response.ok) throw new Error(response.json().message);
       return response.json();
@@ -96,22 +101,27 @@ export const getTrending = () => {
   });
 };
 
-export const getMovieActors = () => {
+export const getMovieActors = (args) => {
+  console.log('args:', args)
+  const [, idPart] = args.queryKey;
+  console.log('idPart:', idPart);
+  const { page } = idPart;
+  console.log('page:', page);
+
   return fetch(
-    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&region=GB&page=${page}`
+    // `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&region=GB&page=1`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
     }
     return response.json();
-  })
-  .catch((error) => {
+  }).catch((error) => {
      throw error
   });
 };
 
 export const getMovieActor = (args) => {
-  // console.log(args)
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
@@ -121,8 +131,7 @@ export const getMovieActor = (args) => {
       throw new Error(response.json().message);
     }
     return response.json();
-  })
-  .catch((error) => {
+  }).catch((error) => {
      throw error
   });
 };
@@ -138,8 +147,7 @@ export const getMovieActorsDetails = ({ queryKey }) => {
     }
     return response.json();
 
-  })
-  .catch((error) => {
+  }).catch((error) => {
     throw error
  });
 };
@@ -155,8 +163,7 @@ export const getMovieActorImages = ({ queryKey }) => {
     }
     return response.json();
 
-  })
-  .catch((error) => {
+  }).catch((error) => {
     throw error
  });
 };
