@@ -1,5 +1,4 @@
 export const getMovies = (args) => {
-
   const [, idPart] = args.queryKey;
   const { page } = idPart;
 
@@ -16,9 +15,9 @@ export const getMovies = (args) => {
 };
   
 export const getMovie = (args) => {
-  // console.log(args)
   const [, idPart] = args.queryKey;
   const { id } = idPart;
+
   return fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
   ).then((response) => {
@@ -49,6 +48,7 @@ export const getMovie = (args) => {
   export const getMovieImages = ({ queryKey }) => {
     const [, idPart] = queryKey;
     const { id } = idPart;
+
     return fetch(
       `https://api.themoviedb.org/3/movie/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
     ).then( (response) => {
@@ -101,6 +101,22 @@ export const getTrending = (args) => {
   });
 };
 
+export const getTopRatedMovies = (args) => {
+  const [, pageIdPart] = args.queryKey;
+  const { page } = pageIdPart;
+  
+  return fetch(
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
+  ).then((response) => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  }).catch((error) => {
+     throw error
+  });
+};
+
 export const getMovieActors = (args) => {
   console.log('args:', args)
   const [, idPart] = args.queryKey;
@@ -123,6 +139,7 @@ export const getMovieActors = (args) => {
 export const getMovieActor = (args) => {
   const [, idPart] = args.queryKey;
   const { id } = idPart;
+
   return fetch(
     `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&append_to_response=movie_credits`
   ).then((response) => {
@@ -138,6 +155,7 @@ export const getMovieActor = (args) => {
 export const getMovieActorImages = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
+
   return fetch(
     `https://api.themoviedb.org/3/person/${id}/images?api_key=${process.env.REACT_APP_TMDB_KEY}`
   ).then( (response) => {

@@ -43,8 +43,10 @@ const FilterActorsCard = (props) => {
 
   return (
     <Card
-      style={{ maxWidth: 345, backgroundColor: "rgb(204, 204, 0)" }}
-      variant="outlined"
+      sx={{
+        maxWidth: 345,
+        backgroundColor: "rgb(169,169,169)"
+      }}
     >
       <CardContent>
         <Typography variant="h5" component="h1">
@@ -61,7 +63,10 @@ const FilterActorsCard = (props) => {
           onChange={handleTextChange}
         />
       </CardContent>
-      <CardMedia sx={{ height: 300 }} image={img} title="Filter" />
+      <CardMedia sx={{ height: 300 }} 
+      image={img} 
+      title="Filter" 
+      />
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
