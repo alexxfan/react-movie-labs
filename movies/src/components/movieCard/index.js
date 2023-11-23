@@ -18,8 +18,8 @@ import { MoviesContext } from "../../contexts/moviesContext";
 
 export default function MovieCard({ movie, action }) {
 
-  const { favorites, addToFavorites } = useContext(MoviesContext);
-  const { mustWatch, addToPlaylist } = useContext(MoviesContext);
+  const { favorites } = useContext(MoviesContext);
+  const { mustWatch } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -33,15 +33,15 @@ export default function MovieCard({ movie, action }) {
     movie.mustWatch = false
   }
 
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
+  // const handleAddToFavorite = (e) => {
+  //   e.preventDefault();
+  //   addToFavorites(movie);
+  // };
 
-  const handleAddToPlaylist = (e) => {
-    e.preventDefault();
-    addToPlaylist(movie);
-  };
+  // const handleAddToPlaylist = (e) => {
+  //   e.preventDefault();
+  //   addToPlaylist(movie);
+  // };
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -53,7 +53,7 @@ export default function MovieCard({ movie, action }) {
             </Avatar>
           ) :
           movie.mustWatch ? (
-            <Avatar sx={{ backgroundColor: 'blue' }}>
+            <Avatar sx={{ backgroundColor: '#4169E1' }}>
                 <PlaylistAddIcon />
             </Avatar>
           ) : null
