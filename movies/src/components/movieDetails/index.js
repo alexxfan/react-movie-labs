@@ -9,6 +9,8 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 
 
 
@@ -78,6 +80,20 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
+      <Link
+        to={`https://www.themoviedb.org/movie/${movie.id}`}
+        style={{ textDecoration: "none" }}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button
+          variant="contained"
+          color="primary"
+          style={{ marginTop: "16px" }}
+        >
+          Learn More
+        </Button>
+      </Link>
       </>
   );
 };

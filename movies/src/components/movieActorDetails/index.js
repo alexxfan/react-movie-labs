@@ -2,9 +2,6 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-//new Material UI component
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import MovieListPageTemplate from "../templateMovieListPage";
 
 const root = {
@@ -36,21 +33,10 @@ const MovieActorDetails = ({ actors }) => {
         <Chip label={`Birthplace: ${actors.place_of_birth}`} />
 
         <Chip label={`Best known for: ${actors.known_for_department}`} />
+
+    
       </Paper>
-      {/* <Link
-        to={`https://www.themoviedb.org/person/${actors.id}`}
-        style={{ textDecoration: "none" }}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button
-          variant="contained"
-          color="primary"
-          style={{ marginTop: "16px" }}
-        >
-          Learn More
-        </Button>
-      </Link> */}
+      
       <MovieListPageTemplate
         title={actors.name}
         movies={actors.movie_credits.cast}
@@ -59,6 +45,7 @@ const MovieActorDetails = ({ actors }) => {
         }
       }
       />
+      
     </>
   );
 };
