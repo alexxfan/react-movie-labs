@@ -23,6 +23,7 @@ This is a React project movie app made for Web App Dev 2 which is similar to IMD
 ## Setup requirements.
 ```bash
 $ npm install
+$ npm start
 ````
 ## API endpoints.
 
