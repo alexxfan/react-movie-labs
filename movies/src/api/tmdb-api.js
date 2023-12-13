@@ -13,6 +13,21 @@ export const getMovies = (args) => {
      throw error
   });
 };
+
+// export const getMovies = async (args) => {
+//   const [, idPart] = args.queryKey;
+//   const { page } = idPart;
+
+//   const response = await fetch(
+//     `http://localhost:8080/api/movies?page=${page}`, {
+//       headers: {
+//         'Authorization': window.localStorage.getItem('token')
+//       }
+//     }
+//   );
+//   return response.json();
+// };
+
   
 export const getMovie = (args) => {
   const [, idPart] = args.queryKey;

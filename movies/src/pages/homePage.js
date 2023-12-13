@@ -6,6 +6,7 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import { Pagination } from "@mui/material";
 
+
 const HomePage = (props) => {
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +18,8 @@ const HomePage = (props) => {
 
   if (isError) {
     return <h1>{error.message}</h1>
-  }  
+  }
+
   const movies = data.results;
 
   const handlePageChange = (event, page) => {
