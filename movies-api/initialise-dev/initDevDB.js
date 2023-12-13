@@ -3,6 +3,8 @@ dotenv.config();
 import mongoose from 'mongoose';
 import users from './users';
 import movies from './movies';
+import genres from './genres';
+import actors from './actors';
 import User from '../api/users/userModel';
 import Movie from '../api/movies/movieModel';
 import Genre from '../api/genres/genreModel';

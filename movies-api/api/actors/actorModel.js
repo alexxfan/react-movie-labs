@@ -33,6 +33,6 @@ ActorSchema.statics.findByActorDBId = function (id) {
   return this.findOne({ id: id });
 };
 
-export default mongoose.model('Actors', ActorSchema);
+export default mongoose.model('Actor', ActorSchema);
 
 
