@@ -8,9 +8,9 @@ import { Pagination } from "@mui/material";
 const MovieActorsPage = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading, isError, refetch } = useQuery(
-    ["actors", { page: currentPage }],
+    ['actors', { page: currentPage }],
     getMovieActors
-  );
+  );  
 
   if (isLoading) {
     return <Spinner />;

@@ -29,6 +29,7 @@ const SignUpPage = () => {
         <div style={{ textAlign: "center", marginTop: "50px" }}>
             <h1>SignUp Page</h1>
             <h2>You must register a username and password to log in</h2>
+            
             <TextField
                 value={userName}
                 label="User Name"
@@ -38,6 +39,8 @@ const SignUpPage = () => {
                 onChange={(e) => setUserName(e.target.value)}
             />
             <br />
+            <h3>Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.</h3>
+            {/* <br /> */}
             <TextField
                 value={password}
                 type="password"

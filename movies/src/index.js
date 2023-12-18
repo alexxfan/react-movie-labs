@@ -40,27 +40,22 @@ const App = () => {
           <SiteHeader />
           <MoviesContextProvider>
             <Routes>
-              <Route
-                path="/movies/favorites"
-                element={<FavoriteMoviesPage />}
-              />
-              <Route
-                path="/movies/playlist"
-                element={<MustWatchMoviesPage />}
-              />
               <Route path="/" element={<LoginPage />} />
-              <Route path="/signup" element={ <SignUpPage /> } />
-              <Route element={<ProtectedRoutes />}></Route>
-              <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-              <Route path="/movies/trending" element={<TrendingMoviesPage />} />
-              <Route path="/movies/toprated" element={<TopRatedMoviesPage />} />
-              <Route path="/reviews/:id" element={<MovieReviewPage />} />
-              <Route path="/movies/:id" element={<MoviePage />} />
-              <Route path="/home" element={<HomePage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+                <Route path="/movies/playlist" element={<MustWatchMoviesPage />} />
+                <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+                <Route path="/movies/trending" element={<TrendingMoviesPage />} />
+                <Route path="/movies/toprated" element={<TopRatedMoviesPage />} />
+                <Route path="/reviews/:id" element={<MovieReviewPage />} />
+                <Route path="/movies/:id" element={<MoviePage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+                <Route path="/actors/" element={<MovieActorsPage />} />
+                <Route path="/actors/:id" element={<MovieActorDetailsPage />} />
+              </Route>
               <Route path="*" element={<Navigate to="/" />} />
-              <Route path="/reviews/form" element={<AddMovieReviewPage />} />
-              <Route path="/actors/" element={<MovieActorsPage />} />
-              <Route path="/actors/:id" element={<MovieActorDetailsPage />} />
             </Routes>
           </MoviesContextProvider>
         </AuthContextProvider>
