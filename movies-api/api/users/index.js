@@ -1,5 +1,6 @@
 import express from 'express';
 import User from './userModel';
+import Movie from '../movies/movieModel';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
@@ -7,7 +8,7 @@ import asyncHandler from 'express-async-handler';
 const router = express.Router(); // eslint-disable-line
 
 // Custom password validation middleware
-const validatePassword = (req, res, next) => {
+const validatePassword = (req, res) => {
   const { password } = req.body;
 
   // Define the password validation regular expression
@@ -18,10 +19,6 @@ const validatePassword = (req, res, next) => {
     return res.status(400).json({ success: false, msg: 'Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.' });
   }
 
-
-
-  // If the password is valid, continue with the next middleware or route handler
-  next();
 };
 
 // Get all users
@@ -87,5 +84,36 @@ async function authenticateUser(req, res) {
         res.status(401).json({ success: false, msg: 'Wrong password.' });
     }
 }
+
+router.get('/:userName/favorites', async (req, res) => {
+    const userName = req.params.userName
+    const findAll = await User.findAllFavorites(userName);
+    res.status(200).json(findAll);
+});
+
+router.post('/:userName/favorites/:id', async (req, res) => {
+    const userName = req.params.userName;
+    const movieId = await Movie.findByMovieDBId(req.params.id);
+    try {
+        const user = await User.findByUserName(userName);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        // check if movie is already in favorites
+        if (!user.favorites.includes(movieId)) {
+            user.favorites.push(movieId);
+            await user.save();
+            return res.status(204).send(); // 204 No Content
+        } else {
+            // Movie is already in favorites
+            return res.status(200).json({ message: 'Movie is already in favorites' });
+        }
+    } catch (error) {
+        console.error('Error adding movie to favorites:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 
 export default router;

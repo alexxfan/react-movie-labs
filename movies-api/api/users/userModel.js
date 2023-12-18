@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: { type: String, unique: true, required: true},
   password: {type: String, required: true },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
 });
 
 UserSchema.methods.comparePassword = async function (passw) { 
@@ -15,6 +16,22 @@ UserSchema.methods.comparePassword = async function (passw) {
 UserSchema.statics.findByUserName = function (username) {
   return this.findOne({ username: username });
 };
+
+UserSchema.methods.addFavorite = function (username, movie) {
+  const user = this.findByUserName(username);
+  user.favorites.push(movie)
+};
+
+UserSchema.methods.removeFavorite = function (username, movie) {
+  const user = this.findByUserName(username);
+  user.favorites.remove(movie)
+}
+
+// find all of the favourites for a user by username
+UserSchema.statics.findAllFavorites = function(userName) {
+  return this.model('User').findOne({ username: userName }).select('favorites');
+}
+
 
 UserSchema.pre('save', async function(next) {
   const saltRounds = 10; // You can adjust the number of salt rounds

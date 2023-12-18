@@ -17,11 +17,12 @@ async function main() {
     }
     await mongoose.connect(process.env.MONGO_DB);
     // Drop collections
-    // await User.collection.drop().catch(err => console.log('User collection not found'));
+    mongoose.connection.collection('users').drop()
+    await User.collection.drop().catch(err => console.log('User collection not found'));
     // await Movie.collection.drop().catch(err => console.log('Movie collection not found'));
     await Genre.collection.drop().catch(err => console.log('Genre collection not found'));
     // await Actor.collection.drop().catch(err => console.log('Actor collection not found'));
-    // await User.create(users);
+    await User.create(users);
     // await Movie.create(movies);
     await Genre.create(genres);
     // await Actor.create(actors);
