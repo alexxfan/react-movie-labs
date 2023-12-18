@@ -32,10 +32,8 @@ export default function FilterMoviesCard(props) {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
-  const genres = data.genres;
-  if (genres[0].name !== "All"){
-    genres.unshift({ id: "0", name: "All" });
-  }
+
+  const genres = data;
 
   const handleChange = (e, type, value) => {
     e.preventDefault();
@@ -80,13 +78,13 @@ export default function FilterMoviesCard(props) {
            value={props.genreFilter}
            onChange={handleGenreChange}
           >
-            {genres.map((genre) => {
+            {data ? genres.map((genre) => {
               return (
                 <MenuItem key={genre.id} value={genre.id}>
                   {genre.name}
                 </MenuItem>
               );
-            })}
+            }) : null}
           </Select>
         </FormControl>
       </CardContent>

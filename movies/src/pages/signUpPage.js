@@ -11,12 +11,9 @@ const SignUpPage = () => {
     const [passwordAgain, setPasswordAgain] = useState("");
     const [registered, setRegistered] = useState(false);
 
-    const handleRegister = () => {
-        let passwordRegEx = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-        const validPassword = passwordRegEx.test(password);
-
-        if (validPassword && password === passwordAgain) {
-            context.register(userName, password);
+    const handleRegister = async () => {
+        const success =  context.register(userName, password);
+        if (success === true) {
             setRegistered(true);
         }
     };
@@ -39,7 +36,6 @@ const SignUpPage = () => {
                 onChange={(e) => setUserName(e.target.value)}
             />
             <br />
-            <h3>Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.</h3>
             {/* <br /> */}
             <TextField
                 value={password}
@@ -49,7 +45,7 @@ const SignUpPage = () => {
                 margin="normal"
                 style={{ width: "300px" }}
                 onChange={(e) => setPassword(e.target.value)}
-            />
+                />
             <br />
             <TextField
                 value={passwordAgain}
@@ -59,11 +55,12 @@ const SignUpPage = () => {
                 margin="normal"
                 style={{ width: "300px" }}
                 onChange={(e) => setPasswordAgain(e.target.value)}
-            />
+                />
             <br />
             <Button variant="contained" color="primary" onClick={handleRegister}>
                 Register
             </Button>
+            {context.authErr && (<div style={{ textAlign: "center", marginTop: "50px" }}>{context.authErr}</div>)}
         </div>
     );
 };

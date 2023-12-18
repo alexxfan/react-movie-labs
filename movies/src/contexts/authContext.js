@@ -8,6 +8,8 @@ const AuthContextProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authToken, setAuthToken] = useState(existingToken);
   const [userName, setUserName] = useState("");
+  const [loginErr, setLoginErr] = useState(null);
+  const [authErr, setAuthErr] = useState(null);
 
   //Function to put JWT token in local storage.
   const setToken = (data) => {
@@ -16,18 +18,31 @@ const AuthContextProvider = (props) => {
   }
 
   const authenticate = async (username, password) => {
-    const result = await login(username, password);
-    if (result.token) {
-      setToken(result.token)
-      setIsAuthenticated(true);
-      setUserName(username);
-    }
+    await login(username, password).then((res) => {
+      console.log(res)
+      if (res.token) {
+        setToken(res.token)
+        setIsAuthenticated(true);
+        setUserName(username);
+      }
+      if (!res.success) {
+        setLoginErr(res.msg)
+      }
+    })
   };
 
   const register = async (username, password) => {
-    const result = await signup(username, password);
-    console.log(result.code);
-    return (result.code == 201) ? true : false;
+    await signup(username, password).then((res) => {
+      console.log(res)
+      if (!res.success) {
+        setAuthErr(res.msg)
+        return false;
+      }
+      if (res.code === 201) {
+        return true;
+      }
+    });
+
   };
 
   const signout = () => {
@@ -41,7 +56,9 @@ const AuthContextProvider = (props) => {
         authenticate,
         register,
         signout,
-        userName
+        userName,
+        authErr,
+        loginErr
       }}
     >
       {props.children}

@@ -15,8 +15,10 @@ const validatePassword = (req, res, next) => {
 
   // Check if the password meets the requirements
   if (!passwordRegex.test(password)) {
-    return res.status(400).json({ error: 'Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.' });
+    return res.status(400).json({ success: false, msg: 'Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.' });
   }
+
+
 
   // If the password is valid, continue with the next middleware or route handler
   next();
@@ -35,14 +37,16 @@ router.post('/', asyncHandler(async (req, res) => {
             return res.status(400).json({ success: false, msg: 'Username and password are required.' });
         }
         if (req.query.action === 'register') {
+            validatePassword(req, res);
             await registerUser(req, res);
         } else {
+            // if the action is not register, authenticate the user
             await authenticateUser(req, res);
         }
     } catch (error) {
         // Log the error and return a generic error message
         console.error(error);
-        res.status(500).json({ success: false, msg: 'Internal server error.' });
+        return res.status(500).json({ success: false, msg: 'Internal server error.' });
     }
 }));
 
@@ -53,16 +57,20 @@ router.put('/:id', async (req, res) => {
         _id: req.params.id,
     }, req.body);
     if (result.matchedCount) {
-        res.status(200).json({ code:200, msg: 'User Updated Sucessfully' });
+        res.status(200).json({ code: 200, msg: 'User Updated Sucessfully' });
     } else {
         res.status(404).json({ code: 404, msg: 'Unable to Update User' });
     }
 });
 
 async function registerUser(req, res) {
+    if (await User.findByUserName(req.body.username)) {
+        return res.status(400).json({ success: false, msg: 'Username already exists.' });
+    }   
     // Add input validation logic here
     await User.create(req.body);
-    res.status(201).json({ success: true, msg: 'User successfully created.' });
+    return res.status(201).json({ success: true, msg: 'User successfully created.' });
+    // check if the user already exists in mongodb
 }
 
 async function authenticateUser(req, res) {

@@ -56,7 +56,7 @@ export const getMovie = async (args) => {
       //   process.env.REACT_APP_TMDB_KEY +
       //   "&language=en-US"
 
-      `http://localhost:8080/api/movies/tmdb/genres` ,{
+      `http://localhost:8080/api/genres` ,{
         headers: {
           'Authorization': window.localStorage.getItem('token')
         }

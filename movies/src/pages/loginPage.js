@@ -43,6 +43,7 @@ const LoginPage = () => {
                 style={{ width: "300px" }}
                 onChange={(e) => setPassword(e.target.value)}
             />
+            {context.loginErr && (<div style={{ textAlign: "center", marginTop: "50px" }}>{context.loginErr}</div>)}
             <br />
             <Button variant="contained" color="primary" onClick={handleLogin}>
                 Log in
