@@ -16,8 +16,9 @@ const validatePassword = (req, res) => {
 
   // Check if the password meets the requirements
   if (!passwordRegex.test(password)) {
-    return res.status(400).json({ success: false, msg: 'Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.' });
-  }
+    return false;
+  } 
+  return true;
 
 };
 
@@ -34,8 +35,11 @@ router.post('/', asyncHandler(async (req, res) => {
             return res.status(400).json({ success: false, msg: 'Username and password are required.' });
         }
         if (req.query.action === 'register') {
-            validatePassword(req, res);
-            await registerUser(req, res);
+            if (validatePassword(req, res)) {
+                await registerUser(req, res);
+            } else {
+                res.status(400).json({ success: false, msg: 'Password must be at least 8 characters long and contain at least one letter, one digit, and one special character.' });
+            }
         } else {
             // if the action is not register, authenticate the user
             await authenticateUser(req, res);
@@ -66,12 +70,13 @@ async function registerUser(req, res) {
     }   
     // Add input validation logic here
     await User.create(req.body);
-    return res.status(201).json({ success: true, msg: 'User successfully created.' });
+    return res.status(201).json({ code: 201, success: true, msg: 'User successfully created.' });
     // check if the user already exists in mongodb
 }
 
 async function authenticateUser(req, res) {
     const user = await User.findByUserName(req.body.username);
+
     if (!user) {
         return res.status(401).json({ success: false, msg: 'Authentication failed. User not found.' });
     }
@@ -91,6 +96,7 @@ router.get('/:userName/favorites', async (req, res) => {
     res.status(200).json(findAll);
 });
 
+
 router.post('/:userName/favorites/:id', async (req, res) => {
     const userName = req.params.userName;
     const movieId = await Movie.findByMovieDBId(req.params.id);
@@ -100,13 +106,14 @@ router.post('/:userName/favorites/:id', async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
         // check if movie is already in favorites
-        if (!user.favorites.includes(movieId)) {
+        if (user.favorites.includes(movieId)) {
+            return res.status(200).json({ message: 'Movie is already in favorites' });
+           
+        } else {
+            // Movie is already in favorites
             user.favorites.push(movieId);
             await user.save();
             return res.status(204).send(); // 204 No Content
-        } else {
-            // Movie is already in favorites
-            return res.status(200).json({ message: 'Movie is already in favorites' });
         }
     } catch (error) {
         console.error('Error adding movie to favorites:', error);
@@ -114,6 +121,33 @@ router.post('/:userName/favorites/:id', async (req, res) => {
     }
 });
 
+// router.get('/:userName/playlist', async (req, res) => {
+//     const userName = req.params.userName
+//     const findAll = await User.findAllFavorites(userName);
+//     res.status(200).json(findAll);
+// });
 
+// router.post('/:userName/playlist/:id', async (req, res) => {
+//     const userName = req.params.userName;
+//     const movieId = await Movie.findByMovieDBId(req.params.id);
+//     try {
+//         const user = await User.findByUserName(userName);
+//         if (!user) {
+//             return res.status(404).json({ error: 'User not found' });
+//         }
+//         // check if movie is already in must watch
+//         if (!user.mustWatch.includes(movieId)) {
+//             user.mustWatch.push(movieId);
+//             await user.save();
+//             return res.status(204).send(); // 204 No Content
+//         } else {
+//             // Movie is already in must watch
+//             return res.status(200).json({ message: 'Movie is already in must watch!' });
+//         }
+//     } catch (error) {
+//         console.error('Error adding movie to must watch playlist:', error);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 export default router;

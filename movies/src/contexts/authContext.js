@@ -19,7 +19,6 @@ const AuthContextProvider = (props) => {
 
   const authenticate = async (username, password) => {
     await login(username, password).then((res) => {
-      console.log(res)
       if (res.token) {
         setToken(res.token)
         setIsAuthenticated(true);
@@ -32,17 +31,14 @@ const AuthContextProvider = (props) => {
   };
 
   const register = async (username, password) => {
-    await signup(username, password).then((res) => {
-      console.log(res)
-      if (!res.success) {
+    return await signup(username, password).then((res) => {
+      if (res.success === true) {
+        return true;
+      } else {
         setAuthErr(res.msg)
         return false;
       }
-      if (res.code === 201) {
-        return true;
-      }
     });
-
   };
 
   const signout = () => {
@@ -54,10 +50,12 @@ const AuthContextProvider = (props) => {
       value={{
         isAuthenticated,
         authenticate,
+        authToken,
         register,
         signout,
         userName,
         authErr,
+        setAuthErr,
         loginErr
       }}
     >

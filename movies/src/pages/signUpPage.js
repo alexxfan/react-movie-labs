@@ -12,13 +12,17 @@ const SignUpPage = () => {
     const [registered, setRegistered] = useState(false);
 
     const handleRegister = async () => {
-        const success =  context.register(userName, password);
-        if (success === true) {
-            setRegistered(true);
+        if (password !== passwordAgain) {
+            context.setAuthErr("Passwords do not match");
+            return;
         }
+        const registrationSuccess = await context.register(userName, password);
+        if (registrationSuccess) {
+            setRegistered(true);
+        } 
     };
 
-    if (registered) {
+    if (registered === true) {
         return <Navigate to="/login" />;
     }
 

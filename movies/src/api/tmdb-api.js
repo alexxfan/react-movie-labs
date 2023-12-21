@@ -237,6 +237,7 @@ export const login = async (username, password) => {
     method: 'post',
     body: JSON.stringify({ username: username, password: password })
   });
+  console.log(response)
   return response.json();
 };
 

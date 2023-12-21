@@ -6,7 +6,9 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   username: { type: String, unique: true, required: true},
   password: {type: String, required: true },
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }],
+  mustWatch: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Movie' }]
+
 });
 
 UserSchema.methods.comparePassword = async function (passw) { 
@@ -30,6 +32,20 @@ UserSchema.methods.removeFavorite = function (username, movie) {
 // find all of the favourites for a user by username
 UserSchema.statics.findAllFavorites = function(userName) {
   return this.model('User').findOne({ username: userName }).select('favorites');
+}
+
+UserSchema.statics.findAllMustWatch = function(userName) {
+  return this.model('User').findOne({ username: userName }).select('mustWatch');
+}
+
+UserSchema.methods.addMustWatch = function (username, movie) {
+  const user = this.findByUserName(username);
+  user.mustWatch.push(movie)
+};
+
+UserSchema.methods.removeMustWatch = function (username, movie) {
+  const user = this.findByUserName(username);
+  user.mustWatch.remove(movie)
 }
 
 

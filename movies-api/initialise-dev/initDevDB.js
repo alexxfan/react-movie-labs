@@ -17,7 +17,7 @@ async function main() {
     }
     await mongoose.connect(process.env.MONGO_DB);
     // Drop collections
-    mongoose.connection.collection('users').drop()
+    // mongoose.connection.collection('users').drop()
     await User.collection.drop().catch(err => console.log('User collection not found'));
     // await Movie.collection.drop().catch(err => console.log('Movie collection not found'));
     await Genre.collection.drop().catch(err => console.log('Genre collection not found'));
