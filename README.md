@@ -20,11 +20,11 @@ $ npm start
 ````
 ## API Configuration
 ______________________
-NODEENV=development
+NODE_ENV=development
 PORT=8080
 HOST=
 mongoDB=YourMongoURL
-seedDb=true
+TMDB_KEY=YourTMDBKey
 secret=YourJWTSecret
 ______________________
 
